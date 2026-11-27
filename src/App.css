@@ -281,3 +281,93 @@ html {
   font-size: 16px;
   color: #526454;
 }
+
+/* Paradise Nursery Navbar */
+.navbar {
+  width: 100%;
+  min-height: 75px;
+  background-color: #245c3a;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 35px;
+  box-sizing: border-box;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.navbar-brand {
+  color: white;
+  font-size: 24px;
+  font-weight: bold;
+  white-space: nowrap;
+}
+
+.navbar-links {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 25px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.navbar-links li {
+  list-style: none;
+}
+
+.navbar-links button {
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 17px;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 10px;
+}
+
+.navbar-links button:hover {
+  color: #c9e8b5;
+}
+
+.cart-nav-button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.cart-badge {
+  background-color: #f5c542;
+  color: #245c3a;
+  border-radius: 50%;
+  min-width: 24px;
+  height: 24px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: bold;
+}
+
+@media (max-width: 600px) {
+  .navbar {
+    padding: 12px;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .navbar-brand {
+    font-size: 19px;
+  }
+
+  .navbar-links {
+    gap: 5px;
+  }
+
+  .navbar-links button {
+    font-size: 14px;
+    padding: 7px;
+  }
+}

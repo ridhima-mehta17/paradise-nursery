@@ -1,4 +1,40 @@
 
+export function Navbar({ currentPage, setCurrentPage, totalItems }) {
+  return (
+    <nav className="navbar">
+      <div className="navbar-brand">
+        🌿 Paradise Nursery
+      </div>
+
+      <ul className="navbar-links">
+        <li>
+          <button onClick={() => setCurrentPage('home')}>
+            Home
+          </button>
+        </li>
+
+        <li>
+          <button onClick={() => setCurrentPage('plants')}>
+            Plants
+          </button>
+        </li>
+
+        <li>
+          <button
+            className="cart-nav-button"
+            onClick={() => setCurrentPage('cart')}
+          >
+            <span>🛒 Cart</span>
+            <span className="cart-badge">
+              {totalItems}
+            </span>
+          </button>
+        </li>
+      </ul>
+    </nav>
+  );
+}
+
 function ProductList({ plants, onAddToCart, cartItems }) {
   const categories = [
     'Indoor Plants',
@@ -7,7 +43,7 @@ function ProductList({ plants, onAddToCart, cartItems }) {
   ];
 
   return (
-    <div>
+    <div className="product-list">
       {categories.map((category) => {
         const categoryPlants = plants.filter(
           (plant) => plant.category === category

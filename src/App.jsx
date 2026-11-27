@@ -8,15 +8,14 @@ import {
   decreaseQuantity
 } from './features/cart/cartSlice';
 
-import ProductList from './components/ProductList';
+import ProductList, { Navbar } from './components/ProductList';
 import CartItem from './components/CartItem';
 
 import './App.css';
 
 function App() {
   const dispatch = useDispatch();
-  const [showPlants, setShowPlants] = useState(false);
-
+  const [currentPage, setCurrentPage] = useState('home');
   const cartItems = useSelector(
     (state) => state.cart.items
   );
@@ -167,96 +166,96 @@ const plants = [
     0
   );
 
+  
+  
   return (
     <div className="app">
 
-     <header>
-  <h1>🌿 Paradise Nursery</h1>
-  <p>Bring Nature Home</p>
- <nav>
-  <a href="#home">Home</a>
-  <a href="#plants">Plants</a>
-  <a href="#about">About Us</a>
-  <a href="#cart">Cart ({totalItems})</a>
-</nav>
-</header>
+      <Navbar
+        currentPage={currentPage}
+        setCurrentPage={setCurrentPage}
+        totalItems={totalItems}
+      />
 
-      <main id="home">
-        <section className="hero">
-  <div className="hero-content">
-    <h1>Welcome to Paradise Nursery</h1>
-    <h2>Bring Nature Home 🌱</h2>
-    <p>
-      Discover beautiful plants and make your home
-      greener, fresher and happier.
-    </p>
+      <main>
+        {currentPage === 'home' && (
+          <>
+            <section className="hero">
+              <div className="hero-content">
+                <h1>Welcome to Paradise Nursery</h1>
+                <h2>Bring Nature Home 🌱</h2>
+                <p>
+                  Discover beautiful plants and make your home
+                  greener, fresher and happier.
+                </p>
 
-   <button
-  className="get-started-button"
-  onClick={() => setShowPlants(true)}
->
-  Get Started
-</button>
-  </div>
-</section>
-        {showPlants && (
-  <>
-    <h2 id="plants">Our Beautiful Plants</h2>
+                <button
+                  className="get-started-button"
+                  onClick={() => setCurrentPage('plants')}
+                >
+                  Get Started
+                </button>
+              </div>
+            </section>
 
-    <ProductList
-      plants={plants}
-      cartItems={cartItems}
-      onAddToCart={(plant) => dispatch(addToCart(plant))}
-    />
-  </>
-)}
+            <AboutUs />
+          </>
+        )}
 
-        <ProductList
-          plants={plants}
-          cartItems={cartItems}
-          onAddToCart={(plant) =>
-            dispatch(addToCart(plant))
-          }
-        />
+        {currentPage === 'plants' && (
+          <>
+            <h2>Our Beautiful Plants</h2>
 
-        <section className="cart" id="cart">
-          <h2>Your Shopping Cart</h2>
-<button onClick={() => {
-  document.getElementById('plants').scrollIntoView({
-    behavior: 'smooth'
-  });
-}}>
-  Continue Shopping
-</button>
-          {cartItems.length === 0 ? (
-            <p>Your cart is empty.</p>
-          ) : (
-            cartItems.map((item) => (
-              <CartItem
-                key={item.id}
-                item={item}
-                onIncrease={(id) =>
-                  dispatch(increaseQuantity(id))
-                }
-                onDecrease={(id) =>
-                  dispatch(decreaseQuantity(id))
-                }
-                onRemove={(id) =>
-                  dispatch(removeFromCart(id))
-                }
-              />
-            ))
-          )}
+            <ProductList
+              plants={plants}
+              cartItems={cartItems}
+              onAddToCart={(plant) =>
+                dispatch(addToCart(plant))
+              }
+            />
+          </>
+        )}
 
-          <h3>Total: ₹{totalPrice}</h3>
-          <button
-  disabled={cartItems.length === 0}
-  onClick={() => alert('Checkout Coming Soon!')}
->
-  Checkout
-</button>
-        </section>
-<AboutUs />
+        {currentPage === 'cart' && (
+          <section className="cart">
+            <h2>Your Shopping Cart</h2>
+
+            <button
+              onClick={() => setCurrentPage('plants')}
+            >
+              Continue Shopping
+            </button>
+
+            {cartItems.length === 0 ? (
+              <p>Your cart is empty.</p>
+            ) : (
+              cartItems.map((item) => (
+                <CartItem
+                  key={item.id}
+                  item={item}
+                  onIncrease={(id) =>
+                    dispatch(increaseQuantity(id))
+                  }
+                  onDecrease={(id) =>
+                    dispatch(decreaseQuantity(id))
+                  }
+                  onRemove={(id) =>
+                    dispatch(removeFromCart(id))
+                  }
+                />
+              ))
+            )}
+
+            <h3>Total: ₹{totalPrice}</h3>
+
+            <button
+              disabled={cartItems.length === 0}
+              onClick={() => alert('Checkout Coming Soon!')}
+            >
+              Checkout
+            </button>
+          </section>
+                )}
       </main>
     </div>
   );
