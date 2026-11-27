@@ -1,6 +1,6 @@
 import AboutUs from './pages/AboutUs';
 import { useDispatch, useSelector } from 'react-redux';
-
+import { useState } from 'react';
 import {
   addToCart,
   removeFromCart,
@@ -15,6 +15,7 @@ import './App.css';
 
 function App() {
   const dispatch = useDispatch();
+  const [showPlants, setShowPlants] = useState(false);
 
   const cartItems = useSelector(
     (state) => state.cart.items
@@ -190,18 +191,25 @@ const plants = [
       greener, fresher and happier.
     </p>
 
-    <button
-      onClick={() => {
-        document.getElementById('plants').scrollIntoView({
-          behavior: 'smooth'
-        });
-      }}
-    >
-      Shop Now
-    </button>
+   <button
+  className="get-started-button"
+  onClick={() => setShowPlants(true)}
+>
+  Get Started
+</button>
   </div>
 </section>
-        <h2 id="plants">Our Beautiful Plants</h2>
+        {showPlants && (
+  <>
+    <h2 id="plants">Our Beautiful Plants</h2>
+
+    <ProductList
+      plants={plants}
+      cartItems={cartItems}
+      onAddToCart={(plant) => dispatch(addToCart(plant))}
+    />
+  </>
+)}
 
         <ProductList
           plants={plants}
